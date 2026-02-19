@@ -15,6 +15,7 @@
 
 export const parseConfig = async () =>
 {
+  // default configuration api
   const response = await fetch("./config.json");
   const json = await response.json();
   const args = parseArgs();
@@ -76,10 +77,12 @@ export const parseConfig = async () =>
 
 const lookUpConfig = async(edition) => 
 {
+  // lookup the configurations by the edition
   const featureLayerRegistryURL = "https://services.arcgis.com/nzS0F0zdNLvs7nc8/arcgis/rest/services/survey123_aedff645769549a5bea20220e2da313f_results/FeatureServer/0"
   const response = await fetch(
     featureLayerRegistryURL+"/query?where=edition='"+edition+"'&outFields=*&returnGeometry=true&f=pjson"
   );
+  console.log("response lookup config", response);
   const json = await response.json();
   let config = null;
   if (json.features.length) {
@@ -103,15 +106,18 @@ const lookUpConfig = async(edition) =>
 
 export const fetchFeatures = async (serviceURL) => 
 {
+  //  Fetch questions/locations from the feature service
   const response = await fetch(
     serviceURL+"/query?where=1+%3D+1&outFields=*&returnGeometry=true&f=pjson"
   );
+  console.log("response", response);
   const json = await response.json();
   return json.features;
 }      
 
 export const getImageURLs = async(serviceURL, objectIds) =>
 {
+  //  Fetch images for questions
   const response = await fetch(
     serviceURL+"/queryAttachments?objectIds="+objectIds.join(",")+"&f=pjson"
   );
@@ -123,8 +129,10 @@ export const getImageURLs = async(serviceURL, objectIds) =>
         objectId: entry.parentObjectId,
         imageURL: `${serviceURL}/${entry.parentObjectId}/attachments/${attachmentInfo.id}`
       };
+      
     }
   );
+  
 }
 
 export const getItemInfo = async(itemID) =>
