@@ -1,23 +1,21 @@
-# Treasure Hunt App
+# IFAIMA Geography App
 
-This is the Github repo for the Treasure Hunt Application, which is a location based quiz application (for the browser) built w/ JavaScript, React, and the ArcGIS API for JavaScript.
+This is the repository for the **IFAIMA Geography App** — a location-based quiz and ice breaker for **Global IFAIMA, Amman**. It runs in the browser and is built with JavaScript, React, and the ArcGIS API for JavaScript.
 
-[View it live](https://esri.github.io/treasure-hunt-app/)
+The app lets participants play a map-based “find the location” game as a conference ice breaker.
 
-![App](./public/th-screensave.png?raw=true)
-
-The remainder of this README is intended for developers who wish to download and modify the source code or host the application on their own servers.
+The remainder of this README is for developers who want to run, modify, or host the application.
 
 ## Instructions
 
-1. Fork and then clone the repo. 
-2. Install dependencies
+1. Clone the repo.
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-3. Run the app in the development mode.
+3. Run the app in development mode:
 
 ```bash
 npm run start
@@ -25,12 +23,12 @@ npm run start
 
 ## Requirements
 
-* [Node JS](https://nodejs.org/) (w/ npm) in order to run development environment.
+* [Node.js](https://nodejs.org/) (with npm) to run the development environment.
 
 ## Resources
 
-* [Node JS](https://nodejs.org/)
-* [ArcGIS API for Javascript](https://developers.arcgis.com/javascript/)
+* [Node.js](https://nodejs.org/)
+* [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/)
 * [React](https://reactjs.org/)
 * [Bootstrap](https://getbootstrap.com/)
 
@@ -38,15 +36,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Issues
 
-Find a bug or want to request a new feature?  Please let us know by submitting an issue.
-
-## Contributing
-
-Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/esri/contributing).
+Find a bug or want to suggest a feature? Open an issue in this repository.
 
 ## Licensing
 
-Copyright 2022 Esri
+Copyright 2022 Esri – Redesigned for Global IFAIMA, Amman.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
