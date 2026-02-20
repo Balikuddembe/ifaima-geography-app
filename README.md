@@ -37,7 +37,3 @@ This project was bootstrapped with Create React App
 ## Issues
 
 Find a bug or want to suggest a feature? Open an issue in this repository.
-
-## Licensing
-
-Copyright 2022 Esri – Redesigned for Global IFAIMA, Amman.
