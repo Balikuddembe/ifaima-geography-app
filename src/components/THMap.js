@@ -44,21 +44,15 @@ export const THMap = ({
   scaleDenominator,
   selected,
   onSolve,
-  onProximityChange,
 }) => {
   const _initCenter = useRef(initCenter);
   const _homeZoom = useRef(homeZoom);
   const _minZoom = useRef(minZoom);
   const _maxZoom = useRef(maxZoom);
   const _reportSolved = useRef(onSolve);
-  const _onProximityChange = useRef(onProximityChange);
   const _selected = useRef(selected);
   const _scaleDenominator = useRef(scaleDenominator);
   const _view = useRef(null);
-
-  useEffect(() => {
-    _onProximityChange.current = onProximityChange;
-  }, [onProximityChange]);
 
   const _performCrossHairTest = useRef(() => {
     const view = _view.current;
@@ -105,10 +99,9 @@ export const THMap = ({
                 );
 
                 view.popup.dockEnabled = false;
-                view.popup.open({
-                  location: selectedPoint,
-                  title: _selected.current.location_name,
-                });
+                view.popup.location = selectedPoint;
+                view.popup.title = _selected.current.location_name;
+                view.popup.visible = true;
                 _reportSolved.current(_selected.current.objectid);
               }),
           1000,
@@ -135,20 +128,24 @@ export const THMap = ({
 
     const distance = viewCenter.distance(selectedPoint);
     const distanceRatio = distance / _scaleDenominator.current;
-    const intensity = Math.max(0, Math.min(1, 1 - distanceRatio));
+    const intensity = 1 - distanceRatio;
+    /*
+            console.log("************************************")
+            console.log("distance", distance);
+            console.log("scale denominator", scaleDenominator)
+            console.log("distance ratio", distanceRatio);
+            console.log("intensity", intensity);
+            */
     const red = parseInt(255 * intensity);
     const blue = parseInt(255 * (1 - intensity));
-    square.style.backgroundColor = `rgba(${red},0,${blue},0.6)`;
 
-    if (_onProximityChange.current && !_selected.current.solved) {
-      _onProximityChange.current(intensity);
-    }
+    square.style.backgroundColor = `rgba(${red + ",0," + blue + ",0.6"}`;
   });
 
   useEffect(() => {
     esriConfig.apiKey = process.env.REACT_APP_ARCGIS_API_KEY || "";
     const view = new MapView({
-      map: new Map({ basemap: "arcgis-community" }),
+      map: new Map({ basemap: "streets-vector" }),
       container: "map",
       center: _initCenter.current,
       zoom: _homeZoom.current,
@@ -167,10 +164,18 @@ export const THMap = ({
       ".esri-view-width-less-than-medium .esri-popup__main-container {width: auto;}";
     document.head.append(style);
 
-    view.popup.visibleElements = { closeButton: false };
-    view.popup.dockOptions.buttonEnabled = false;
-    view.popup.actions.removeAll();
-    view.popup.alignment = "top-center";
+    try {
+      view.popup.visibleElements = { closeButton: false };
+      if (view.popup.dockOptions) {
+        view.popup.dockOptions.buttonEnabled = false;
+      }
+      if (view.popup.actions) {
+        view.popup.actions.removeAll();
+      }
+      view.popup.alignment = "top-center";
+    } catch (e) {
+      console.warn("Popup config skipped:", e);
+    }
 
     const square = document.createElement("div");
     square.setAttribute("id", "square");
@@ -196,7 +201,7 @@ export const THMap = ({
     popupHelp.setAttribute("id", "map-balloon-help");
     popupHelp.setAttribute("class", "pulsing");
     popupHelp.innerHTML =
-      "Pan and zoom the map until your guess is inside the circle.";
+      "Use the map's pan/zoom functions to frame your guess location within the viewfinder circle!";
     view.ui.add(popupHelp, "manual");
 
     _view.current = view;
@@ -247,7 +252,9 @@ export const THMap = ({
 
     _selected.current = selected;
     _view.current.graphics.removeAll();
-    _view.current.popup.close();
+    if (_view.current.popup) {
+      _view.current.popup.visible = false;
+    }
 
     const selectedPoint = new Point({
       x: _selected.current.x,
@@ -285,10 +292,9 @@ export const THMap = ({
           );
 
           _view.current.popup.dockEnabled = false;
-          _view.current.popup.open({
-            location: selectedPoint,
-            title: _selected.current.location_name,
-          });
+          _view.current.popup.location = selectedPoint;
+          _view.current.popup.title = _selected.current.location_name;
+          _view.current.popup.visible = true;
         });
     } else {
       _view.current
@@ -311,7 +317,13 @@ export const THMap = ({
     }
   }, [selected]);
 
-  return <div id={id} className={className} style={{ cursor: "grab" }}></div>;
+  return (
+    <div
+      id={id}
+      className={className}
+      style={{ cursor: "grab", minHeight: 300, flex: "1 1 0" }}
+    />
+  );
 };
 
 const boxToExtent = (view, square) => {
