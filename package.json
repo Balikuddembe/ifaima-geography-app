@@ -1,12 +1,12 @@
 {
-  "name": "th-v3",
+  "name": "ifaima-geography-app",
   "version": "0.1.0",
   "homepage": ".",
   "private": true,
   "dependencies": {
     "@arcgis/core": "^4.24.7",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.4",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.2",
     "bootstrap-icons": "^1.9.1",
@@ -24,10 +24,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
     "production": [
