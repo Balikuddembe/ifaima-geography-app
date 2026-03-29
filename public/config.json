@@ -1,7 +1,7 @@
 {
   "title": "Global AIM - Amman 2026 – Ice Breaker",
   "description": "Where in the world? Pin the location on the map. A quick, fun ice breaker to kick off the conference in Amman.",
-  "serviceURL": "https://services1.arcgis.com/9kSZJgj6BQGtNCHF/arcgis/rest/services/survey123_895336b7ac774191a802239816e01592_results/FeatureServer/0",
+  "serviceURL": "https://services2.arcgis.com/aNJgWPqvZyTbm8FO/arcgis/rest/services/survey123_6326f2fa5cf74db680396959d868b6a4/FeatureServer/0",
   "path": "global-ifaima-amman",
   "introImage": "./ifaima.jpg",
   "initCenter": [-40, 29],
